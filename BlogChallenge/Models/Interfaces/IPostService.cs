@@ -9,7 +9,7 @@ namespace BlogChallenge.Models.Interfaces
 {
     public interface IPostService
     {
-        Task<IEnumerable<PostDto>> GetAllPosts();
+        Task<IEnumerable<PostsListDto>> GetAllPosts();
         Task<Post> GetPostById(int id);
         Task AddPost(Post post);
         Task UpdatePost(Post post);

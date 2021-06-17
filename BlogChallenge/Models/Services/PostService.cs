@@ -35,9 +35,18 @@ namespace BlogChallenge.Models.Services
             }
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPosts()
+        public async Task<IEnumerable<PostsListDto>> GetAllPosts()
         {
-            return await _context.Posts.Select(x => new PostDto { Id = x.Id, Title = x.Title }).ToListAsync();
+            return await _context.Posts
+                .Select(x => new PostsListDto 
+                { 
+                    Id = x.Id, 
+                    Title = x.Title, 
+                    Image = x.Image, 
+                    CategoryId = x.CategoryId, 
+                    CreatedDate = x.CreatedDate 
+                })
+                .ToListAsync();
         }
 
         public async Task<Post> GetPostById(int id)
