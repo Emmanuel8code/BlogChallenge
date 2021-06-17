@@ -19,6 +19,7 @@ namespace BlogChallenge.Data.Configurations
                 .IsRequired();
 
             builder.Property(b => b.Content)
+                .HasMaxLength(40000)
                 .IsRequired();
 
             builder.Property(b => b.Image);
