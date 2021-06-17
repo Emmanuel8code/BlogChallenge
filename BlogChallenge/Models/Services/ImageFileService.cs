@@ -12,15 +12,17 @@ namespace BlogChallenge.Models.Services
     public class ImageFileService : IImageFileService
     {
         private readonly IWebHostEnvironment _environment;
+        private readonly string _imagesFolderPath;  
         public ImageFileService(IWebHostEnvironment environment)
         {
             _environment = environment;
+            _imagesFolderPath = _environment.WebRootPath + "\\Images\\";
         }
 
         public async Task<string> UploadImage(FormFile image)
         {
             //string[] permittedExtensions = { ".jpg", ".png", ".svg" };
-            string imagesFolderPath = _environment.WebRootPath + "\\Images\\";
+            
             string imageFileName = image.FileName + DateTime.UtcNow.ToString();
      
             try
@@ -32,12 +34,12 @@ namespace BlogChallenge.Models.Services
                 //    throw new InvalidDataException(string.Format("Invalid file extension"));
                 //}
 
-                if (!Directory.Exists(imagesFolderPath))
+                if (!Directory.Exists(_imagesFolderPath))
                 {
-                    Directory.CreateDirectory(imagesFolderPath);
+                    Directory.CreateDirectory(_imagesFolderPath);
                 }
 
-                using (FileStream fileStream = File.Create(imagesFolderPath + imageFileName))
+                using (FileStream fileStream = File.Create(_imagesFolderPath + imageFileName))
                 {
                     await image.CopyToAsync(fileStream);
                     fileStream.Flush();
@@ -51,9 +53,12 @@ namespace BlogChallenge.Models.Services
             }
         }
 
-        public void DeleteImage(string image)
+        public void DeleteImage(string imageFileName)
         {
-            throw new NotImplementedException();
+            if (Directory.Exists(_imagesFolderPath))
+            {
+                File.Delete(_imagesFolderPath + imageFileName);
+            }
         }
     }
 }

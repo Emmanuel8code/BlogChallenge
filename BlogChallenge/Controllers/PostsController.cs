@@ -154,7 +154,10 @@ namespace BlogChallenge.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _postService.DeletePost(id);
+            var post = await _postService.DeletePost(id);
+
+            _imageFileService.DeleteImage(post.Image);
+
             return RedirectToAction(nameof(Index));
         }
     }

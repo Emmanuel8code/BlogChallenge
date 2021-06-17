@@ -24,7 +24,7 @@ namespace BlogChallenge.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeletePost(int id)
+        public async Task<Post> DeletePost(int id)
         {
             var post = await _context.Posts.FindAsync(id);
 
@@ -33,6 +33,8 @@ namespace BlogChallenge.Models.Services
                 _context.Remove(post);
                 await _context.SaveChangesAsync();
             }
+            
+            return post;
         }
 
         public async Task<IEnumerable<PostsListDto>> GetAllPosts()

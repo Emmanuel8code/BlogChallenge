@@ -9,6 +9,6 @@ namespace BlogChallenge.Models.Interfaces
     public interface IImageFileService
     {
         public Task<string> UploadImage(FormFile image);
-        public void DeleteImage(string image);
+        public void DeleteImage(string imageFileName);
     }
 }
