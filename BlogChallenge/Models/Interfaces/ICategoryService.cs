@@ -10,8 +10,8 @@ namespace BlogChallenge.Models.Interfaces
     {
         Task<IEnumerable<Category>> GetAllCategories();
         Task<Category> GetCategoryById(int id);
-        Task<bool> AddCategory(Category category);
-        Task<bool> UpdateCategory(Category category);
-        Task<bool> DeleteCategory(int id);
+        Task AddCategory(Category category);
+        Task UpdateCategory(Category category);
+        Task DeleteCategory(int id);
     }
 }
