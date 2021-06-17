@@ -42,13 +42,18 @@ namespace BlogChallenge.Models.Services
 
         public async Task<Post> GetPostById(int id)
         {
-            return await _context.Posts.Where(x => x.Id == id).Include(x => x.Category).FirstOrDefaultAsync();
+            return await _context.Posts.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task UpdatePost(Post post)
         {
             _context.Update(post);
             await _context.SaveChangesAsync();
+        }
+
+        public bool ExistPost(int id)
+        {
+            return _context.Posts.Any(x => x.Id == id);
         }
     }
 }

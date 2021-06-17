@@ -14,5 +14,6 @@ namespace BlogChallenge.Models.Interfaces
         Task AddPost(Post post);
         Task UpdatePost(Post post);
         Task DeletePost(int id);
+        bool ExistPost(int id);
     }
 }

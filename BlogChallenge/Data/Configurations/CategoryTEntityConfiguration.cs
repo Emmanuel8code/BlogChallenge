@@ -17,6 +17,9 @@ namespace BlogChallenge.Data.Configurations
             builder.Property(b => b.Title)
                 .HasMaxLength(100)
                 .IsRequired();
+
+            builder.HasIndex(b => b.Title)
+                .IsUnique();
         }
     }
 }

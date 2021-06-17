@@ -18,13 +18,17 @@ namespace BlogChallenge.Data.Configurations
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(b => b.Contain)
+            builder.Property(b => b.Content)
                 .IsRequired();
 
             builder.Property(b => b.Image);
 
             builder.Property(b => b.CreatedDate)
                 .IsRequired();
+
+            builder.HasOne(b => b.Category)
+                .WithMany(c => c.Posts)
+                .HasForeignKey(b => b.CategoryId);
         }
     }
 }

@@ -18,16 +18,16 @@ namespace BlogChallenge.Models.ViewModels
 
         [Required(ErrorMessage = "Complete el título de la Publicación")]
         [Display(Name = "Contenido")]
-        public string Contain { get; set; }
+        public string Content { get; set; }
 
         [Display(Name = "Imagen")]
         public FormFile Image { get; set; }
 
-        [DataType(DataType.Date)]
-        [Display(Name = "Fecha de creación")]
-        public DateTime CreatedDate { get; set; }
+        //[DataType(DataType.Date)]
+        //[Display(Name = "Fecha de creación")]
+        //public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Categoría")]
-        public string Category { get; set; }
+        public int CategoryId { get; set; }
     }
 }

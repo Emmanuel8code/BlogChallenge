@@ -1,4 +1,6 @@
 using BlogChallenge.Data;
+using BlogChallenge.Models.Interfaces;
+using BlogChallenge.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,10 @@ namespace BlogChallenge
         {
             services.AddDbContext<BlogChallengeDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IImageFileService, ImageFileService>();
 
             services.AddControllersWithViews();
         }
