@@ -3,6 +3,7 @@ using BlogChallenge.Models.Interfaces;
 using BlogChallenge.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -49,29 +50,41 @@ namespace BlogChallenge.Controllers
         }
 
         // GET: PostsController/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.itemsOfCategories = await _categoryService.GetSelectListCategories();
+
             return View();
         }
 
         // POST: PostsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,Image,CategoryId")] PostViewModel postViewModel)
+        public async Task<IActionResult> Create([FromForm] PostViewModel postViewModel)
         {
             if (ModelState.IsValid)
             {
-                Post post = new Post
+                string imageFileName = null;
+
+                if (postViewModel.Image != null)
+                {
+                    imageFileName = await _imageFileService.UploadImage(postViewModel.Image);
+                }
+                
+                Post post = new()
                 {
                     Title = postViewModel.Title,
                     Content = postViewModel.Content,
-                    Image = await _imageFileService.UploadImage(postViewModel.Image),
+                    Image = imageFileName,
                     CategoryId = postViewModel.CategoryId
                 };
 
                 await _postService.AddPost(post);
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.itemsOfCategories = await _categoryService.GetSelectListCategories();
+
             return View(postViewModel);
         }
 
@@ -88,7 +101,19 @@ namespace BlogChallenge.Controllers
             {
                 return NotFound();
             }
-            return View(post);
+
+            PostViewModel postViewModel = new()
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                //Image = "a completar",
+                CategoryId = post.CategoryId
+            };
+
+            ViewBag.itemsOfCategories = await _categoryService.GetSelectListCategories();
+
+            return View(postViewModel);
         }
 
         // POST: PostsController/Edit/5
@@ -105,7 +130,7 @@ namespace BlogChallenge.Controllers
             {
                 try
                 {
-                    Post post = new Post
+                    Post post = new()
                     {
                         Id = postViewModel.Id,
                         Title = postViewModel.Title,

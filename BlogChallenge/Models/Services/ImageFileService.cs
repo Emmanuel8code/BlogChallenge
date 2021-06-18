@@ -19,11 +19,11 @@ namespace BlogChallenge.Models.Services
             _imagesFolderPath = _environment.WebRootPath + "\\Images\\";
         }
 
-        public async Task<string> UploadImage(FormFile image)
+        public async Task<string> UploadImage(IFormFile image)
         {
             //string[] permittedExtensions = { ".jpg", ".png", ".svg" };
             
-            string imageFileName = image.FileName + DateTime.UtcNow.ToString();
+            string imageFileName = image.FileName;
      
             try
             {

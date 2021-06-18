@@ -1,6 +1,7 @@
 ﻿using BlogChallenge.Data;
 using BlogChallenge.Models.Entities;
 using BlogChallenge.Models.Interfaces;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,22 @@ namespace BlogChallenge.Models.Services
         {
             _context.Update(category);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<SelectListItem>> GetSelectListCategories()
+        {
+            List<Category> listOfCategories = (List<Category>)await GetAllCategories();
+
+            List<SelectListItem> itemsOfCategories = listOfCategories.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Title.ToString(),
+                    Value = d.Id.ToString()
+                };
+            });
+
+            return itemsOfCategories;
         }
     }
 }

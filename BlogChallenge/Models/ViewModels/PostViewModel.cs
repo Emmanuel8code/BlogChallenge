@@ -16,12 +16,12 @@ namespace BlogChallenge.Models.ViewModels
         [Display(Name = "Título")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Complete el título de la Publicación")]
+        [Required(ErrorMessage = "Agregue contenido")]
         [Display(Name = "Contenido")]
         public string Content { get; set; }
 
         [Display(Name = "Imagen")]
-        public FormFile Image { get; set; }
+        public IFormFile Image { get; set; }
 
         //[DataType(DataType.Date)]
         //[Display(Name = "Fecha de creación")]
